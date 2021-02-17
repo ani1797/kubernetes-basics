@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # Each resource is assigned a unique ID automatically
+  # Name represents the name of the application
+  name: nginx
+  labels:
+    # Labels allow us searching for components and binding resources to others
+    name: nginx
+spec:
+  containers:
+  # Pods can run more than one containers
+  - name: nginx-container
+    image: nginx:latest
+    # Resources are the mechanisms Kubernetes uses to control resources such as CPU and memory.
+    resources:
+      # Requests are what the container is guaranteed to get.
+      # If a container requests a resource, Kubernetes will only schedule it on a node that can give it that resource.
+      # For memory: measured in bytes. Possible units are Pi, Ti, Gi, Mi, Ki
+      # For CPU: can be measured in vCPU core or a fractional number(millicore) representing a CPU core. 1 meaning 1 vCPU or 0.1 meaning 1/10th of the cpu or 100m
+      # Know more at the following links:
+      # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory
+      # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
+      # requests:
+      #   memory: "128Mi"
+      #   cpu: "500m"
+      # Limit make sure a container never goes above a certain value. The container is only allowed to go up to the limit, and then it is restricted.
+      # Be a good citizen in kubernetes world and only request what is needed or else you risk starving other resources.
+      limits:
+        memory: "128Mi"
+        cpu: "500m" # Defaults to 100ms
+    ports:
+      - containerPort: 80
