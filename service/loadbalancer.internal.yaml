@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-svc-loadbalancer-int
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    app: hello-kubernetes-with-env
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer

@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-ing
+  labels:
+      name: hello-ing
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # Forces SSL Redirect (no http)
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: hello.manulife.dev
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          serviceName: hello-kubernetes-with-env
+          servicePort: 80
